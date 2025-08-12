@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigo Secreto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fefefe;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #4a90e2;
+            padding: 20px;
+            color: white;
+        }
+
+        .input-area {
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 8px;
+            width: 200px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        li {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .sorteo-btn {
+            margin-top: 20px;
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .sorteo-btn:hover {
+            background-color: darkorange;
+        }
+
+        #resultado {
+            margin-top: 15px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Amigo Secreto</h1>
+    </header>
+
+    <main>
+        <p>Digite el nombre de sus amigos</p>
+        <div class="input-area">
+            <input type="text" id="nombre" placeholder="Escribe un nombre">
+            <button id="btnAgregar">Añadir</button>
+        </div>
+
+        <ul id="listaNombres"></ul>
+
+        <button class="sorteo-btn" id="btnSortear">Sortear amigo</button>
+        <p id="resultado"></p>
+    </main>
+
+    <script>
+        let nombres = [];
+
+        function mostrarLista() {
+            let lista = document.getElementById("listaNombres");
+            lista.innerHTML = "";
+            nombres.forEach(n => {
+                let li = document.createElement("li");
+                li.textContent = n;
+                lista.appendChild(li);
+            });
+        }
+
+        document.getElementById("btnAgregar").addEventListener("click", function() {
+            let nombre = document.getElementById("nombre").value.trim();
+            let resultado = document.getElementById("resultado");
+            resultado.textContent = "";
+
+            if (nombre === "") {
+                alert("Por favor, escribe un nombre.");
+                return;
+            }
+            if (nombres.includes(nombre)) {
+                alert("Ese nombre ya fue agregado.");
+                return;
+            }
+
+            nombres.push(nombre);
+            mostrarLista();
+            document.getElementById("nombre").value = "";
+        });
+
+        document.getElementById("btnSortear").addEventListener("click", function() {
+            let resultado = document.getElementById("resultado");
+
+            if (nombres.length < 2) {
+                alert("Agrega al menos dos nombres para sortear.");
+                return;
+            }
+
+            let aleatorio = Math.floor(Math.random() * nombres.length);
+            resultado.textContent = `🎉 Tu amigo secreto es: ${nombres[aleatorio]} 🎉`;
+        });
+    </script>
+
+</body>
+</html>
